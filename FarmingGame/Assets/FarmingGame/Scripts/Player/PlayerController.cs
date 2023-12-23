@@ -86,7 +86,7 @@ public class PlayerController : StateMachine
 
     private void OnSowSelectedHandler()
     {
-        SwitchState(new SowingState(this));
+        SwitchState(new PlayerSowingState(this));
     }
     private void OnNoneSelectedHandler()
     {

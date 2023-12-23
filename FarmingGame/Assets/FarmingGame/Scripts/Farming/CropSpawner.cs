@@ -13,7 +13,10 @@ public class CropSpawner : MonoBehaviour
     {
         Crop crop = Instantiate(cropData.crop,cropTile.transform.position,Quaternion.identity);
         Debug.Log(crop);
-
+    }
+    public void SpawnCropFull(CropData cropData, CropTile cropTile)
+    {
+        Crop crops = Instantiate(cropData.cropFull,cropTile.transform.position,Quaternion.identity);
     }
 
 }

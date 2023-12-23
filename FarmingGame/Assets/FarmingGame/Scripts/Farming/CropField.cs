@@ -7,6 +7,7 @@ public class CropField : MonoBehaviour
 {
     [Header("---- CROP DATA ----")]
     [SerializeField] private CropData cropData;
+    [SerializeField] private CropData cropDataFull;
 
     [Header("---- REFERENCES ----")]
     [SerializeField] private Transform cropTilesParent;
@@ -65,7 +66,7 @@ public class CropField : MonoBehaviour
     }
     private void Water(CropTile cropTile)
     {
-        cropTile.SwitchState(new CropFieldWateredState(cropTile));
+        cropTile.SwitchState(new CropFieldWateredState(cropTile,cropSpawner,cropDataFull));
         tilesWatered++;
         if(IsFieldFullyWatered()) FieldFullWatered();
     }

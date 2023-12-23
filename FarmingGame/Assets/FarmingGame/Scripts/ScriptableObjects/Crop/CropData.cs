@@ -7,4 +7,5 @@ public class CropData : ScriptableObject
 {
     [Header("--- SETTINGS ---")]
     public Crop crop;
+    public Crop cropFull;
 }

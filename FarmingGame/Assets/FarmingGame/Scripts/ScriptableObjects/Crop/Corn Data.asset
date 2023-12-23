@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: Corn Data
   m_EditorClassIdentifier: 
   crop: {fileID: -3368606473847097811, guid: 2e67e05d400b71249bcccd48cf305f50, type: 3}
+  cropFull: {fileID: 8520572984785870245, guid: 05e9c6b1029d1334fa9b01b9c7950cab,
+    type: 3}
