@@ -9,10 +9,14 @@ public class PlayerAnimator
 
     private const string _runAnimationName = "Running";
     private const string _idleAnimationName = "Idle";
+    private const string _sowAnimationName = "Sow";
 
-    public PlayerAnimator(Animator animator)
+    private ParticleSystem _waterParticles;
+
+    public PlayerAnimator(Animator animator, ParticleSystem waterParticles)
     {
         _playerAnimator = animator;
+        _waterParticles = waterParticles;
     }
 
 
@@ -25,22 +29,40 @@ public class PlayerAnimator
     {
         if(moveDirection.magnitude >0)
         {
-            RunAnimation();
+            PlayRunAnimation();
             _playerAnimator.gameObject.transform.forward = moveDirection;
         }
         else
         {
-            IdleAnimation();
+            PlayIdleAnimation();
         }
         
     }
 
-    private void IdleAnimation()
+    private void PlayIdleAnimation()
     {
         _playerAnimator.Play(_idleAnimationName);
     }
-    private void RunAnimation()
+    private void PlayRunAnimation()
     {
         _playerAnimator.Play(_runAnimationName);        
     }
+    public void PlaySowAnimation()
+    {
+        _playerAnimator.SetLayerWeight(1,1);
+    }
+    public void StopSowAnimation()
+    {
+        _playerAnimator.SetLayerWeight(1, 0);
+    }
+    public void PlayWateringAnimation()
+    {
+        _playerAnimator.SetLayerWeight(2,1);
+    }
+    public void StopWateringAnimation()
+    {
+        _playerAnimator.SetLayerWeight(2, 0);
+        _waterParticles.Stop();
+    }
+
 }

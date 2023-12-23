@@ -1,46 +1,98 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
-public class PlayerController : MonoBehaviour
+public class PlayerController : StateMachine
 {
     [Header("--- References ---")]
     [SerializeField] private Joystick _joystick;
-    private Animator _animator;
+    [SerializeField] private CropInteraction cropInteraction;
+    [SerializeField] private ToolSelector toolSelector;
+    [SerializeField] private GameObject wateringCan;
+    [SerializeField] private ParticleSystem waterParticles;
 
+    private float _moveSpeed = 50f;
     private CharacterController _characterController;
+    private Animator _animator;
+    private Mover _mover;
     private PlayerAnimator _playerAnimator;
 
-    [Header("--- Settings ---")]
-    [SerializeField] private float moveSpeed;
+    # region PROPERTIES
+    public float MoveSpeed => _moveSpeed;
+    public Mover Mover => _mover;
+    public Joystick Joystick =>_joystick;
+    public PlayerAnimator PlayerAnimator => _playerAnimator;
+    public CropInteraction CropInteract => cropInteraction;
+    public GameObject WateringCan => wateringCan;
+    #endregion
+
+    #region CROP PROCESS
+    
+    #endregion
+
+
+
+
 
     private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
+        _mover = new Mover(_characterController);
         _animator = GetComponentInChildren<Animator>();
-        _playerAnimator = new PlayerAnimator(_animator);
+        _playerAnimator = new PlayerAnimator(_animator,waterParticles);
+        cropInteraction = GetComponent<CropInteraction>();
 
+    }
+    private void OnEnable()
+    {
+        toolSelector.OnSowSelected += OnSowSelectedHandler;
+        toolSelector.OnWaterSelected += OnWaterSelectedHandler;
+        toolSelector.OnHarvestSelected += OnHarvestSelectedHandler;
+        toolSelector.OnNoneSelected += OnNoneSelectedHandler;
+    }
+
+    private void OnDisable()
+    {
+        toolSelector.OnSowSelected -= OnSowSelectedHandler;
+        toolSelector.OnWaterSelected -= OnWaterSelectedHandler;
+        toolSelector.OnHarvestSelected -= OnHarvestSelectedHandler;
+        toolSelector.OnNoneSelected -= OnNoneSelectedHandler;
+    }
+
+    private void Start()
+    {
+        SwitchState(new IdleState(this));
     }
 
     private void Update()
     {
-        Move();
+        _currentState?.TickState();        
     }
 
-    private void Move()
+
+
+    private void OnHarvestSelectedHandler()
     {
-        Vector3 moveDirection = _joystick.MoveDirection * moveSpeed * Time.deltaTime / Screen.width;
-        moveDirection.z = moveDirection.y;
-        moveDirection.y = 0f;
-
-        _characterController.Move(moveDirection);
-        _playerAnimator.Action(moveDirection);
+        
     }
 
-    private void NormalizeMoveVector()
+    private void OnWaterSelectedHandler()
     {
-
+        SwitchState(new PlayerWateringState(this));
     }
+
+    private void OnSowSelectedHandler()
+    {
+        SwitchState(new SowingState(this));
+    }
+    private void OnNoneSelectedHandler()
+    {
+        SwitchState(new IdleState(this));
+    }
+
+
+
 }
