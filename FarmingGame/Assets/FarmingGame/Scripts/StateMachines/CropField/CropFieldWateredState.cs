@@ -5,13 +5,17 @@ using UnityEngine;
 public class CropFieldWateredState : State
 {
     private CropTile _cropTile;
+    private CropSpawner _cropSpawner;
+    private CropData _currentCropFullData;
 
     private float buyumeHizi = 10;
     private float time;
 
-    public CropFieldWateredState(CropTile cropTile)
+    public CropFieldWateredState(CropTile cropTile,CropSpawner cropSpawner,CropData cropDataFull)
     {
         _cropTile = cropTile;
+        _cropSpawner = cropSpawner;
+        _currentCropFullData = cropDataFull;
     }
     public override void EnterState()
     {
@@ -33,6 +37,8 @@ public class CropFieldWateredState : State
     {
         //_cropTile.TileRenderer.material.color = Color.white *.3f;
         _cropTile.TileRenderer.gameObject.LeanColor(Color.white * .3f, 1);
+        _cropSpawner.SpawnCropFull(_currentCropFullData,_cropTile);
+        
 
         _cropTile.IsWatered = true;
 

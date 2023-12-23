@@ -3,13 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SowingState : State
+public class PlayerSowingState : State
 {
     #region REFERENCES
     private PlayerController _player;
     #endregion
 
-    public SowingState(PlayerController player)
+    public PlayerSowingState(PlayerController player)
     {
         _player = player;
     }
