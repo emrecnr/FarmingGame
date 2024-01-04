@@ -15,6 +15,9 @@ public class CropFieldEmptyState : State
     public override void EnterState()
     {
        _cropTile.IsEmpty = true;
+       _cropTile.IsSown = false;
+       _cropTile.IsWatered = false;
+       _cropTile.CurrentCrop = null;
     }
 
     public override void ExitState()

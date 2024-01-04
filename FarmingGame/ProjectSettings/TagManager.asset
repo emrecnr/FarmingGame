@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Crop
   - CropField
+  - Buyer
+  - CoinAmount
+  - ChunkTrigger
   layers:
   - Default
   - TransparentFX

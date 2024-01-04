@@ -4,20 +4,22 @@ using UnityEngine;
 
 public class CropTileSownState : State
 {
-    private CropData _currentCropData;
-    private CropSpawner _cropSpawner;
     private CropTile _cropTile;
+    //private CropData _cropData;
+    private CropSpawner _cropSpawner;
+    GenericPool<Crop> cropPool;
 
-    public CropTileSownState(CropData currentCropData,CropSpawner cropSpawner,CropTile cropTile)
-    {
-        _currentCropData = currentCropData;
+    public CropTileSownState(GenericPool<Crop> cropPool,CropSpawner cropSpawner,CropTile cropTile)
+    {   
+       this.cropPool = cropPool;
         _cropSpawner = cropSpawner;
         _cropTile = cropTile;
     }
     public override void EnterState()
     {
         _cropTile.IsSown = true;
-        Sow(_currentCropData);
+        Sow();
+        _cropTile.CurrentCrop = _cropSpawner.SpawnedCrop;
     }
 
     public override void TickState()
@@ -27,12 +29,11 @@ public class CropTileSownState : State
 
     public override void ExitState()
     {
-        
+        cropPool.Set(_cropTile.CurrentCrop); // Back to pool
     }
 
-    public void Sow(CropData cropData)
+    public void Sow()
     {      
-        _cropSpawner.SpawnCrop(_cropTile,cropData);
-        Debug.Log("Crop Sown: "+ cropData);
+        _cropSpawner.SpawnCrop(_cropTile, cropPool);        
     }
 }

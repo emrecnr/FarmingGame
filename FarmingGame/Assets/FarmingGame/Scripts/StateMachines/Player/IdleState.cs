@@ -12,7 +12,7 @@ public class IdleState : State
 
     public override void EnterState()
     {
-        Debug.Log("Enter State IDLE");
+        
     }
 
     public override void TickState()
@@ -23,6 +23,6 @@ public class IdleState : State
 
     public override void ExitState()
     {
-        Debug.Log("Exit State IDLE");
+        
     }
 }
