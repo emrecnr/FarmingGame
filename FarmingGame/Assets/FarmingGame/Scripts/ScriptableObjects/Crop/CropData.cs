@@ -6,6 +6,11 @@ using UnityEngine;
 public class CropData : ScriptableObject
 {
     [Header("--- SETTINGS ---")]
+    public CropType cropType;
     public Crop crop;
-    public Crop cropFull;
+    public float cropLifeTime;
+    public Sprite icon;
+    public int price;
+    public float experience;
+
 }

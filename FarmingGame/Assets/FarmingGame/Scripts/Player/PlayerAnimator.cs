@@ -9,7 +9,6 @@ public class PlayerAnimator
 
     private const string _runAnimationName = "Running";
     private const string _idleAnimationName = "Idle";
-    private const string _sowAnimationName = "Sow";
 
     private ParticleSystem _waterParticles;
 
@@ -38,7 +37,6 @@ public class PlayerAnimator
         }
         
     }
-
     private void PlayIdleAnimation()
     {
         _playerAnimator.Play(_idleAnimationName);
@@ -63,6 +61,14 @@ public class PlayerAnimator
     {
         _playerAnimator.SetLayerWeight(2, 0);
         _waterParticles.Stop();
+    }
+    public void PlayHarvestingAnimation()
+    {
+        _playerAnimator.SetLayerWeight(3,1);
+    }
+    public void StopHarvestingAnimation()
+    {
+        _playerAnimator.SetLayerWeight(3,0);
     }
 
 }

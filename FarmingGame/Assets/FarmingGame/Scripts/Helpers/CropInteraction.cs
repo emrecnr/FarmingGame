@@ -22,8 +22,6 @@ public class CropInteraction : MonoBehaviour
             _isInteractingWithCropField = true;
              _currentCrop = other.GetComponent<CropField>();
              OnTriggerCrop?.Invoke(_currentCrop);
-
-            Debug.Log("Interact : " + _currentCrop);
         }
     }
     private void OnTriggerExit(Collider other)

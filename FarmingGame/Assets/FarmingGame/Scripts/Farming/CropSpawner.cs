@@ -1,22 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using UnityEngine;
 
 public class CropSpawner : MonoBehaviour
 {
-    //public CropTile cropTile;
-    //public CropData cropData;
+    private Crop _spawnedCrop;
+    public Crop SpawnedCrop => _spawnedCrop;
 
-
-
-    public void SpawnCrop(CropTile cropTile,CropData cropData)
+    public void SpawnCrop(CropTile cropTile,GenericPool<Crop> cropPool)
     {
-        Crop crop = Instantiate(cropData.crop,cropTile.transform.position,Quaternion.identity);
-        Debug.Log(crop);
-    }
-    public void SpawnCropFull(CropData cropData, CropTile cropTile)
-    {
-        Crop crops = Instantiate(cropData.cropFull,cropTile.transform.position,Quaternion.identity);
-    }
 
+
+        Crop obj = cropPool.Get();
+        obj.transform.position = cropTile.transform.position; // Instantiate(crop,cropTile.transform.position,Quaternion.identity);
+        obj.gameObject.SetActive(true);
+        _spawnedCrop = obj;        
+    }
+    public void SpawnSeed(CropTile cropTile)
+    {
+
+    }
 }

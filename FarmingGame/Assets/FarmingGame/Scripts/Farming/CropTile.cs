@@ -8,6 +8,10 @@ public class CropTile : StateMachine
 {
     private MeshRenderer _meshRenderer;
 
+    private Crop _currentCrop;
+    private CropData _cropData;
+
+
     private bool _isEmpty;
     private bool _isSown ;
     private bool _isWatered;
@@ -15,13 +19,17 @@ public class CropTile : StateMachine
     public bool IsEmpty {get{ return _isEmpty;} set{_isEmpty = value;}}
     public bool IsSown { get { return _isSown; } set { _isSown = value; } }
     public bool IsWatered { get { return _isWatered; } set { _isWatered = value; } }
-
+    public Crop CurrentCrop { get { return _currentCrop; } set { _currentCrop = value; } }
     public MeshRenderer TileRenderer => _meshRenderer;
+
+    [Header("Events")]
+    public static Action<CropType> OnCropHarvested;
+    public static Action<float> OnCropHarvestedExperience;
+
 
     private void Awake()
     {
         _meshRenderer = GetComponentInChildren<MeshRenderer>();
-        Debug.Log(_meshRenderer);
     }
     private void Start()
     {
@@ -32,23 +40,6 @@ public class CropTile : StateMachine
         _currentState.TickState();
     }
 
-    public void StartC()
-    {
-        StartCoroutine(StartCountdown());
-    }
-    private IEnumerator StartCountdown()
-    {
-        int currentTime = 10;
-
-        while (currentTime > 0)
-        {
-            Debug.Log(currentTime);
-            yield return new WaitForSeconds(1f); // Her saniye bekler
-            currentTime--;
-        }
-
-        Debug.Log("Geri sayım tamamlandı!");
-    }
 
 }
  

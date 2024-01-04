@@ -37,6 +37,7 @@ public class PlayerWateringState : State
 
     public override void ExitState()
     {
+        _player.PlayerAnimator.StopWateringAnimation();
         WaterParticles.onWaterCollided -= WaterCollidedHandler;
         CropField.OnFullySown -= CropFieldFullyWaterHandler;
         _player.WateringCan.SetActive(false);

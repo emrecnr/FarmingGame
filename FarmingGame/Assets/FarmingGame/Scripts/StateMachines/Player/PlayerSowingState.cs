@@ -51,9 +51,7 @@ public class PlayerSowingState : State
         if (cropField == _player.CropInteract.CurrentCrop)
         {   
             _player.PlayerAnimator.StopSowAnimation();
-            Debug.Log("durdu");
-        }     
-
+        }
     }
     #endregion
 

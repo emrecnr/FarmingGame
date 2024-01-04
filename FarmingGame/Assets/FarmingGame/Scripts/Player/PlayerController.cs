@@ -7,12 +7,16 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : StateMachine
 {
+    #region FIELDS
     [Header("--- References ---")]
     [SerializeField] private Joystick _joystick;
     [SerializeField] private CropInteraction cropInteraction;
     [SerializeField] private ToolSelector toolSelector;
     [SerializeField] private GameObject wateringCan;
     [SerializeField] private ParticleSystem waterParticles;
+    [SerializeField] private PlayerAnimationEvents playerAnimationEvents;
+    [SerializeField] private Transform harvestSphereArea;
+
 
     private float _moveSpeed = 50f;
     private CharacterController _characterController;
@@ -20,6 +24,7 @@ public class PlayerController : StateMachine
     private Mover _mover;
     private PlayerAnimator _playerAnimator;
 
+    #endregion
     # region PROPERTIES
     public float MoveSpeed => _moveSpeed;
     public Mover Mover => _mover;
@@ -27,15 +32,11 @@ public class PlayerController : StateMachine
     public PlayerAnimator PlayerAnimator => _playerAnimator;
     public CropInteraction CropInteract => cropInteraction;
     public GameObject WateringCan => wateringCan;
+    public PlayerAnimationEvents PlayerAnimationEvents => playerAnimationEvents;
+    public Transform HarvestSphereArea => harvestSphereArea;
     #endregion
 
-    #region CROP PROCESS
-    
-    #endregion
-
-
-
-
+    #region METHODS
 
     private void Awake()
     {
@@ -72,11 +73,13 @@ public class PlayerController : StateMachine
         _currentState?.TickState();        
     }
 
+    #endregion
 
+    #region Event Handlers
 
     private void OnHarvestSelectedHandler()
     {
-        
+        SwitchState(new PlayerHarvestingState(this));
     }
 
     private void OnWaterSelectedHandler()
@@ -92,6 +95,8 @@ public class PlayerController : StateMachine
     {
         SwitchState(new IdleState(this));
     }
+
+    #endregion
 
 
 
